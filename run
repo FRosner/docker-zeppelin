@@ -1,0 +1,2 @@
+#!/bin/sh
+docker run --rm -t -i -v `pwd`/notebooks:/usr/local/zeppelin/notebooks -p 8080:8080 frosner/docker-zeppelin /sbin/my_init -- bash -l
