@@ -7,3 +7,9 @@ RUN curl -s http://ftp.fau.de/apache/incubator/zeppelin/0.5.6-incubating/zeppeli
   && rm -rf /usr/local/zeppelin/notebook
 ADD zeppelin-site.xml /usr/local/zeppelin/conf/zeppelin-site.xml
 ADD zeppelin-env.sh /usr/local/zeppelin/conf/zeppelin-env.sh
+
+RUN mkdir /etc/service/zeppelin
+ADD start-zeppelin.sh /etc/service/zeppelin/run
+RUN chmod a+x /etc/service/zeppelin/run
+
+CMD ["/sbin/my_init"]
