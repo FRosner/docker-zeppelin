@@ -1,4 +1,4 @@
-FROM frosner/docker-spark
+FROM frosner/spark
 
 MAINTAINER Frank Rosner <frank@fam-rosner.de>
 
