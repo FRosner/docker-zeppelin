@@ -1,4 +1,4 @@
-FROM frosner/spark
+FROM frosner/spark-base
 
 MAINTAINER Frank Rosner <frank@fam-rosner.de>
 
