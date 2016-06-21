@@ -9,8 +9,4 @@ ADD zeppelin-site.xml /usr/local/zeppelin/conf/zeppelin-site.xml
 ADD zeppelin-env.sh /usr/local/zeppelin/conf/zeppelin-env.sh
 ADD interpreter.json /usr/local/zeppelin/conf/interpreter.json
 
-RUN mkdir /etc/service/zeppelin
-ADD start-zeppelin.sh /etc/service/zeppelin/run
-RUN chmod a+x /etc/service/zeppelin/run
-
-CMD ["/sbin/my_init"]
+CMD ["/usr/local/zeppelin/bin/zeppelin.sh"]
