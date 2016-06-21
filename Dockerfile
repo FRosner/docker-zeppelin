@@ -8,5 +8,8 @@ RUN curl -s http://ftp.fau.de/apache/incubator/zeppelin/0.5.6-incubating/zeppeli
 ADD zeppelin-site.xml /usr/local/zeppelin/conf/zeppelin-site.xml
 ADD zeppelin-env.sh /usr/local/zeppelin/conf/zeppelin-env.sh
 ADD interpreter.json /usr/local/zeppelin/conf/interpreter.json
+RUN rm -f /usr/local/zeppelin/bin/zeppelin.sh
+ADD zeppelin.sh /usr/local/zeppelin/bin/zeppelin.sh
+RUN chmod 777 /usr/local/zeppelin/bin/zeppelin.sh
 
 ENTRYPOINT ["/usr/local/zeppelin/bin/zeppelin.sh"]
