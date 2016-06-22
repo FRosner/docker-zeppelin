@@ -1,0 +1,31 @@
+#!/bin/bash
+
+NOMAD_DOCKER_COMMAND=$*
+
+if [ -z "$ZEPPELIN_CONTAINER_NAME" ]; then
+  echo 'Please set $ZEPPELIN_CONTAINER_NAME'
+  exit 1
+fi
+
+if [ -z "$NOMAD_PORT_ui" ]; then
+  echo 'Please set $NOMAD_PORT_ui'
+  exit 1
+fi
+
+if [ -z "$ZEPPELIN_NOTEBOOK_MOUNT" ]; then
+  echo 'Please set $ZEPPELIN_NOTEBOOK_MOUNT'
+  exit 1
+fi
+
+echo "Stopping container $ZEPPELIN_CONTAINER_NAME"
+docker stop $ZEPPELIN_CONTAINER_NAME
+
+echo "Removing container $ZEPPELIN_CONTAINER_NAME"
+docker rm $ZEPPELIN_CONTAINER_NAME
+
+echo "Starting container $ZEPPELIN_CONTAINER_NAME"
+exec docker run \
+  --name $ZEPPELIN_CONTAINER_NAME \
+  -p $NOMAD_PORT_ui:8080 \
+  -v $ZEPPELIN_NOTEBOOK_MOUNT:/usr/local/zeppelin/notebooks \
+  frosner/zeppelin
