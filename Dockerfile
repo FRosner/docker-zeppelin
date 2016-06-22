@@ -12,6 +12,10 @@ RUN git clone https://github.com/apache/zeppelin.git /usr/local/zeppelin
 WORKDIR /usr/local/zeppelin
 RUN git checkout master
 
-RUN mvn clean package -Pspark-1.6 -Phadoop-2.6
+RUN mvn clean package -Pspark-1.6 -Phadoop-2.6 -DskipTests
+
+VOLUME ["/usr/local/zeppelin/notebooks"]
+
+EXPOSE 8080
 
 ENTRYPOINT ["bin/zeppelin.sh"]
