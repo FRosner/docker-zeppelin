@@ -1,2 +1,0 @@
-#!/bin/sh
-docker run -d -v `pwd`/notebooks:/usr/local/zeppelin/notebooks -p 8080:8080 frosner/docker-zeppelin
