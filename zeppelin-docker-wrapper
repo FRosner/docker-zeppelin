@@ -1,7 +1,5 @@
 #!/bin/bash
 
-NOMAD_DOCKER_COMMAND=$*
-
 if [ -z "$ZEPPELIN_CONTAINER_NAME" ]; then
   echo 'Please set $ZEPPELIN_CONTAINER_NAME'
   exit 1
