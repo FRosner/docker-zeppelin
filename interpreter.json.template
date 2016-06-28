@@ -6,7 +6,7 @@
       "group": "spark",
       "properties": {
         "spark.cores.max": "",
-        "master": "spark://master:7077",
+        "master": "$ZEPPELIN_SPARK_MASTER",
         "zeppelin.spark.maxResult": "200",
         "zeppelin.dep.localrepo": "local-repo",
         "spark.app.name": "Zeppelin",

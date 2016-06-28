@@ -28,8 +28,8 @@ RUN rm -f conf/zeppelin-env.sh
 RUN rm -f conf/zeppelin-site.xml
 RUN rm -f conf/interpreter.json
 
-COPY zeppelin-env.sh conf
-COPY zeppelin-site.xml conf
-COPY interpreter.json conf
+COPY zeppelin-env.sh.template conf
+COPY zeppelin-site.xml.template conf
+COPY interpreter.json.template conf
 
 ENTRYPOINT ["bin/start-zeppelin.sh"]
