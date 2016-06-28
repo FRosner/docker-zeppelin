@@ -20,4 +20,16 @@ EXPOSE 8080
 
 COPY start-zeppelin.sh bin
 
+RUN apt-get update && \
+  apt-get install -y gettext && \
+  apt-get clean all
+
+RUN rm -f conf/zeppelin-env.sh
+RUN rm -f conf/zeppelin-site.xml
+RUN rm -f conf/interpreter.json
+
+COPY zeppelin-env.sh conf
+COPY zeppelin-site.xml conf
+COPY interpreter.json conf
+
 ENTRYPOINT ["bin/start-zeppelin.sh"]
