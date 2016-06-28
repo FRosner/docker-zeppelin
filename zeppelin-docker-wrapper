@@ -25,6 +25,6 @@ echo "Starting container $ZEPPELIN_CONTAINER_NAME"
 exec docker run \
   --name $ZEPPELIN_CONTAINER_NAME \
   -p $NOMAD_PORT_ui:8080 \
-  -e ZEPPELIN_SPARK_MASTER="'$ZEPPELIN_SPARK_MASTER'" \
+  -e ZEPPELIN_SPARK_MASTER="$ZEPPELIN_SPARK_MASTER" \
   -v $ZEPPELIN_NOTEBOOK_MOUNT:/usr/local/zeppelin/notebooks \
   frosner/zeppelin
