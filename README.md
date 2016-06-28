@@ -18,6 +18,17 @@ config {
 }
 ```
 
+It also needs a port called "ui" to be configured in Nomad.
+
+```
+resources {
+  network {
+    mbits = 10
+    port "ui" {}
+  }
+}
+```
+
 ## Configuration
 
 The docker wrapper requires some environment variables to be set in the `env` section of your Nomad job definition.
@@ -28,4 +39,3 @@ They are used to configure your Zeppelin.
 | `ZEPPELIN_CONTAINER_NAME` | Name of the docker container that the wrapper will use to reference it. |
 | `ZEPPELIN_NOTEBOOK_MOUNT` | Mount point on the docker host where Zeppelin will store / look for notebooks. |
 | `ZEPPELIN_SPARK_MASTER` | URL of the Spark master that Zeppelin should use. |
-
