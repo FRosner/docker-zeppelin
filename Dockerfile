@@ -18,4 +18,6 @@ VOLUME ["/usr/local/zeppelin/notebooks"]
 
 EXPOSE 8080
 
-ENTRYPOINT ["bin/zeppelin.sh"]
+COPY start-zeppelin.sh bin
+
+ENTRYPOINT ["bin/start-zeppelin.sh"]
