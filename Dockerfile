@@ -20,7 +20,8 @@ EXPOSE 8080
 
 COPY start-zeppelin.sh bin
 
-RUN apt-get update && \
+RUN rm -rf /var/lib/apt/lists/* && \
+  apt-get update && \
   apt-get install -y gettext && \
   apt-get clean all
 
