@@ -10,7 +10,7 @@ RUN npm install -g bower grunt
 
 RUN git clone https://github.com/apache/zeppelin.git /usr/local/zeppelin
 WORKDIR /usr/local/zeppelin
-RUN git checkout master
+RUN git checkout v0.6.0
 
 RUN mvn clean package -Pspark-1.6 -Phadoop-2.6 -DskipTests
 
@@ -20,16 +20,19 @@ EXPOSE 8080
 
 COPY start-zeppelin.sh bin
 
-RUN apt-get update && \
+RUN rm -rf /var/lib/apt/lists/* && \
+  apt-get update && \
   apt-get install -y gettext && \
   apt-get clean all
 
 RUN rm -f conf/zeppelin-env.sh
 RUN rm -f conf/zeppelin-site.xml
 RUN rm -f conf/interpreter.json
+RUN rm -f conf/shiro.ini
 
 COPY zeppelin-env.sh.template conf
 COPY zeppelin-site.xml.template conf
 COPY interpreter.json.template conf
+COPY shiro.ini.template conf
 
 ENTRYPOINT ["bin/start-zeppelin.sh"]
