@@ -22,6 +22,12 @@
 </property>
 
 <property>
+  <name>zeppelin.anonymous.allowed</name>
+  <value>false</value>
+  <description>Allow anonymous connections to Zeppelin</description>
+</property>
+
+<property>
   <name>zeppelin.war.tempdir</name>
   <value>webapps</value>
   <description>Location of jetty temporary directory</description>

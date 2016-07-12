@@ -39,3 +39,4 @@ They are used to configure your Zeppelin.
 | `ZEPPELIN_CONTAINER_NAME` | Name of the docker container that the wrapper will use to reference it. |
 | `ZEPPELIN_NOTEBOOK_MOUNT` | Mount point on the docker host where Zeppelin will store / look for notebooks. |
 | `ZEPPELIN_SPARK_MASTER` | URL of the Spark master that Zeppelin should use. |
+| `ZEPPELIN_PASSWORD` | Password to use for authenticating as `zeppelin` user. |

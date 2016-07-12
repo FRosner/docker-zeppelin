@@ -27,9 +27,11 @@ RUN apt-get update && \
 RUN rm -f conf/zeppelin-env.sh
 RUN rm -f conf/zeppelin-site.xml
 RUN rm -f conf/interpreter.json
+RUN rm -f conf/shiro.ini
 
 COPY zeppelin-env.sh.template conf
 COPY zeppelin-site.xml.template conf
 COPY interpreter.json.template conf
+COPY shiro.ini.template conf
 
 ENTRYPOINT ["bin/start-zeppelin.sh"]
