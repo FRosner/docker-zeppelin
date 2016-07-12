@@ -10,7 +10,7 @@ RUN npm install -g bower grunt
 
 RUN git clone https://github.com/apache/zeppelin.git /usr/local/zeppelin
 WORKDIR /usr/local/zeppelin
-RUN git checkout master
+RUN git checkout v0.6.0
 
 RUN mvn clean package -Pspark-1.6 -Phadoop-2.6 -DskipTests
 
