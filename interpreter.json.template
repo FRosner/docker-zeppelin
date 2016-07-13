@@ -68,6 +68,21 @@
       "option": {
         "remote": true
       }
+    },
+    "2B6N7TAWJ": {
+      "id": "2B6N7TAWJ",
+      "name": "sh",
+      "group": "sh",
+      "properties": {},
+      "interpreterGroup": [
+        {
+          "class": "org.apache.zeppelin.shell.ShellInterpreter",
+          "name": "sh"
+        }
+      ],
+      "option": {
+        "remote": true
+      }
     }
   },
   "interpreterBindings": {}
