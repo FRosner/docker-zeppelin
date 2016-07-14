@@ -20,6 +20,9 @@ RUN rm -rf /var/lib/apt/lists/* && \
   apt-get install -y sudo && \
   apt-get clean all
 
+RUN curl -s http://d3kbcqa49mib13.cloudfront.net/spark-1.6.2-bin-hadoop2.6.tgz | tar -xz -C /usr/local
+RUN mv /usr/local/spark* /usr/local/spark
+
 RUN rm -f conf/zeppelin-env.sh
 RUN rm -f conf/zeppelin-site.xml
 RUN rm -f conf/interpreter.json

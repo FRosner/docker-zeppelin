@@ -4,16 +4,9 @@ export ZEPPELIN_NOTEBOOK_DIR="notebooks"   		# Where notebook at?
 
 #### Spark interpreter configuration ####
 
-## Use provided spark installation ##
-## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
-##
-# export SPARK_HOME                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
+export SPARK_HOME=/usr/local/spark
 # export SPARK_SUBMIT_OPTIONS="--master spark://master:7077"                   # (optional) extra options to pass to spark submit. eg) "--driver-memory 512M --executor-memory 1G".
 
-## Use embedded spark binaries ##
-## without SPARK_HOME defined, Zeppelin still able to run spark interpreter process using embedded spark binaries.
-## however, it is not encouraged when you can define SPARK_HOME
-##
 # Options read in YARN client mode
 # export HADOOP_CONF_DIR         		# yarn-site.xml is located in configuration directory in HADOOP_CONF_DIR.
 # Pyspark (supported with Spark 1.2.1 and above)
