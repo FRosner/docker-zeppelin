@@ -12,7 +12,7 @@ if getent group $ZEPPELIN_PROCESS_GROUP_NAME; then
   echo "Group $ZEPPELIN_PROCESS_GROUP_NAME already exists"
 else
   echo "Group $ZEPPELIN_PROCESS_GROUP_NAME does not exist, creating it with gid=$ZEPPELIN_PROCESS_GROUP_ID"
-  addgroup -gid $ZEPPELIN_PROCESS_GROUP_ID $ZEPPELIN_PROCESS_GROUP_NAME
+  addgroup --force-badname -gid $ZEPPELIN_PROCESS_GROUP_ID $ZEPPELIN_PROCESS_GROUP_NAME
 fi
 
 # add zeppelin user if not exists
@@ -20,7 +20,7 @@ if id -u $ZEPPELIN_PROCESS_USER_NAME 2>/dev/null; then
   echo "User $ZEPPELIN_PROCESS_USER_NAME already exists"
 else
   echo "User $ZEPPELIN_PROCESS_USER_NAME does not exist, creating it with uid=$ZEPPELIN_PROCESS_USER_ID"
-  adduser $ZEPPELIN_PROCESS_USER_NAME --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup $ZEPPELIN_PROCESS_GROUP_NAME --disabled-login --disabled-password
+  adduser --force-badname $ZEPPELIN_PROCESS_USER_NAME --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup $ZEPPELIN_PROCESS_GROUP_NAME --disabled-login --disabled-password
 fi 
 
 # adjust ownership of the zeppelin folder
