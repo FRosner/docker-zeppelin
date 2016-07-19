@@ -23,17 +23,12 @@ RUN rm -rf /var/lib/apt/lists/* && \
 RUN curl -s http://d3kbcqa49mib13.cloudfront.net/spark-1.6.2-bin-hadoop2.6.tgz | tar -xz -C /usr/local
 RUN mv /usr/local/spark* /usr/local/spark
 
-RUN rm -f conf/zeppelin-env.sh
-RUN rm -f conf/zeppelin-site.xml
-RUN rm -f conf/interpreter.json
-RUN rm -f conf/shiro.ini
+RUN rm -rf conf
 
-COPY zeppelin-env.sh.template conf
-COPY zeppelin-site.xml.template conf
-COPY interpreter.json.template conf
-COPY shiro.ini.template conf
+COPY conf.templates conf.templates
 
 VOLUME ["/usr/local/zeppelin/notebooks"]
+VOLUME ["/usr/local/zeppelin/conf"]
 
 EXPOSE 8080
 

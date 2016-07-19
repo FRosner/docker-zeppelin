@@ -19,6 +19,7 @@ docker run -p 8080:8080 \
   -e ZEPPELIN_PROCESS_GROUP_NAME="zeppeling" \
   -e ZEPPELIN_PROCESS_GROUP_ID=12340 \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
+  -v $(pwd)/conf:/usr/local/zeppelin/conf \
   frosner/zeppelin
 ```
 
