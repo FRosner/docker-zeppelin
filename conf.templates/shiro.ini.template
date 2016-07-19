@@ -26,6 +26,11 @@ zeppelin = $ZEPPELIN_PASSWORD
 #ldapRealm.userDnTemplate = cn={0},cn=engg,ou=testdomain,dc=testdomain,dc=com
 #ldapRealm.contextFactory.url = ldap://ldaphost:389
 #ldapRealm.contextFactory.authenticationMechanism = SIMPLE
+
+sessionManager = org.apache.shiro.web.session.mgt.DefaultWebSessionManager
+securityManager.sessionManager = $sessionManager
+securityManager.sessionManager.globalSessionTimeout = 86400000
+
 shiro.loginUrl = /api/login
 
 [urls]

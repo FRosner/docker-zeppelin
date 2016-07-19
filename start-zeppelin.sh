@@ -2,19 +2,24 @@
 cd /usr/local/zeppelin
 
 echo "Filling Zeppelin configuration templates"
+
 function replace_env_config {
   local conf_name=$1
+  local envs_to_replace=$2
   if [ ! -r conf/$conf_name ]; then
     echo "$conf_name does not exist, creating it"
-    cat conf.templates/$conf_name.template | envsubst > conf/$conf_name
+    envsubst $envs_to_replace < conf.templates/$conf_name.template > conf/$conf_name
   else
     echo "$conf_name already exists, not overwriting"
   fi
 }
 
-for conf in interpreter.json zeppelin-env.sh zeppelin-site.xml shiro.ini interpreter-list log4j.properties; do
-  replace_env_config $conf
-done
+replace_env_config interpreter.json
+replace_env_config zeppelin-env.sh
+replace_env_config zeppelin-site.xml
+replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
+replace_env_config interpreter-list
+replace_env_config log4j.properties
 
 # add zeppelin group if not exists
 if getent group $ZEPPELIN_PROCESS_GROUP_NAME; then
