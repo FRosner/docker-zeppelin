@@ -20,6 +20,7 @@ replace_env_config zeppelin-site.xml
 replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
 replace_env_config interpreter-list
 replace_env_config log4j.properties
+replace_env_config hive-site.xml
 
 # add zeppelin group if not exists
 if getent group $ZEPPELIN_PROCESS_GROUP_NAME; then
@@ -40,7 +41,7 @@ fi
 # adjust ownership of the zeppelin folder
 chown -R $ZEPPELIN_PROCESS_USER_NAME ../zeppelin
 chgrp -R $ZEPPELIN_PROCESS_GROUP_NAME ../zeppelin
-chown -R $ZEPPELIN_PROCESS_USER_NAME /user
-chgrp -R $ZEPPELIN_PROCESS_GROUP_NAME /user
+chown -R $ZEPPELIN_PROCESS_USER_NAME /hive
+chgrp -R $ZEPPELIN_PROCESS_GROUP_NAME /hive
 
 exec sudo -u $ZEPPELIN_PROCESS_USER_NAME bin/zeppelin.sh

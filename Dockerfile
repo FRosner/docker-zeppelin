@@ -29,7 +29,7 @@ COPY conf.templates conf.templates
 
 VOLUME ["/usr/local/zeppelin/notebooks"]
 VOLUME ["/usr/local/zeppelin/conf"]
-VOLUME ["/user"]
+VOLUME ["/hive"]
 
 EXPOSE 8080
 
