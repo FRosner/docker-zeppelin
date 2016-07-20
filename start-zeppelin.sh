@@ -38,7 +38,7 @@ else
 fi 
 
 # adjust ownership of the zeppelin folder
-chown -R $ZEPPELIN_PROCESS_USER_NAME *
-chgrp -R $ZEPPELIN_PROCESS_GROUP_NAME *
+chown -R $ZEPPELIN_PROCESS_USER_NAME ../zeppelin
+chgrp -R $ZEPPELIN_PROCESS_GROUP_NAME ../zeppelin
 
 exec sudo -u $ZEPPELIN_PROCESS_USER_NAME bin/zeppelin.sh
