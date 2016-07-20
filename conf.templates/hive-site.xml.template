@@ -35,9 +35,4 @@
   <description>location of default database for the warehouse</description>
 </property>
 
-<property>
-  <name>hive.metastore.uris</name>
-  <value>thrift://localhost:9083</value>
-</property>
-
 </configuration>
