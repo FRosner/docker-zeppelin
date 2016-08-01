@@ -18,6 +18,7 @@ docker run -p 8080:8080 \
   -e ZEPPELIN_PROCESS_USER_ID=12345 \
   -e ZEPPELIN_PROCESS_GROUP_NAME="zeppeling" \
   -e ZEPPELIN_PROCESS_GROUP_ID=12340 \
+  -e ZEPPELIN_SERVER_PORT=8080 \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
   -v $(pwd)/conf:/usr/local/zeppelin/conf \
   -v $(pwd)/hive:/hive \
@@ -36,3 +37,4 @@ The docker image requires some environment variables to be set. They are used to
 | `ZEPPELIN_PROCESS_USER_ID` | User ID to execute the Zeppelin process as. |
 | `ZEPPELIN_PROCESS_GROUP_NAME` | Group name to assign to the Zeppelin user. |
 | `ZEPPELIN_PROCESS_GROUP_ID` | Group ID to assign to the Zeppelin user. |
+| `ZEPPELIN_SERVER_PORT` | Port to bind the Zeppelin server to |

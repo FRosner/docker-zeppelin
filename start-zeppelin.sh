@@ -3,7 +3,7 @@ cd /usr/local/zeppelin
 
 echo "Filling Zeppelin configuration templates"
 
-function replace_env_config {
+function replace_env_config_if_not_exists {
   local conf_name=$1
   local envs_to_replace=$2
   if [ ! -r conf/$conf_name ]; then
@@ -14,8 +14,15 @@ function replace_env_config {
   fi
 }
 
-replace_env_config interpreter.json
-replace_env_config zeppelin-env.sh
+function replace_env_config {
+  local conf_name=$1
+  local envs_to_replace=$2
+  echo "creating $conf_name"
+  envsubst $envs_to_replace < conf.templates/$conf_name.template > conf/$conf_name
+}
+
+replace_env_config_if_not_exists interpreter.json
+replace_env_config_if_not_exists zeppelin-env.sh
 replace_env_config zeppelin-site.xml
 replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
 replace_env_config interpreter-list
