@@ -5,7 +5,7 @@ export ZEPPELIN_NOTEBOOK_DIR="notebooks"   		# Where notebook at?
 #### Spark interpreter configuration ####
 
 export SPARK_HOME=/usr/local/spark
-# export SPARK_SUBMIT_OPTIONS="--master spark://master:7077"                   # (optional) extra options to pass to spark submit. eg) "--driver-memory 512M --executor-memory 1G".
+export SPARK_SUBMIT_OPTIONS="--driver-memory $ZEPPELIN_SPARK_DRIVER_MEMORY"
 
 # Options read in YARN client mode
 # export HADOOP_CONF_DIR         		# yarn-site.xml is located in configuration directory in HADOOP_CONF_DIR.

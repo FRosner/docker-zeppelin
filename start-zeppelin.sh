@@ -22,7 +22,7 @@ function replace_env_config {
 }
 
 replace_env_config_if_not_exists interpreter.json
-replace_env_config_if_not_exists zeppelin-env.sh
+replace_env_config zeppelin-env.sh
 replace_env_config zeppelin-site.xml
 replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
 replace_env_config interpreter-list
