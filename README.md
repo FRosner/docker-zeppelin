@@ -14,6 +14,7 @@ You can either start the image directly with Docker, or use the [Nomad-Docker-Wr
 docker run -p 8080:8080 \
   -e ZEPPELIN_SPARK_MASTER="local[*]" \
   -e ZEPPELIN_PASSWORD="secret" \
+  -e ZEPPELIN_NOTEBOOK_STORAGE=org.apache.zeppelin.notebook.repo.VFSNotebookRepo \
   -e ZEPPELIN_PROCESS_USER_NAME="zeppelinu" \
   -e ZEPPELIN_PROCESS_USER_ID=12345 \
   -e ZEPPELIN_PROCESS_GROUP_NAME="zeppeling" \
@@ -35,6 +36,7 @@ The docker image requires some environment variables to be set. They are used to
 | -------- | ----------- |
 | `ZEPPELIN_SPARK_MASTER` | URL of the Spark master that Zeppelin should use. |
 | `ZEPPELIN_PASSWORD` | Password to use for authenticating as `zeppelin` user on the UI. |
+| `ZEPPELIN_NOTEBOOK_STORAGE` | [Notebook storage](https://zeppelin.apache.org/docs/0.6.0/storage/storage.html) to use. |
 | `ZEPPELIN_PROCESS_USER_NAME` | User name to execute the Zeppelin process as. |
 | `ZEPPELIN_PROCESS_USER_ID` | User ID to execute the Zeppelin process as. |
 | `ZEPPELIN_PROCESS_GROUP_NAME` | Group name to assign to the Zeppelin user. |

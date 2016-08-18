@@ -53,7 +53,7 @@
 
 <property>
   <name>zeppelin.notebook.storage</name>
-  <value>org.apache.zeppelin.notebook.repo.VFSNotebookRepo</value>
+  <value>$ZEPPELIN_NOTEBOOK_STORAGE</value>
   <description>notebook persistence layer implementation</description>
 </property>
 
