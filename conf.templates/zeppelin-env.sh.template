@@ -12,4 +12,5 @@ export SPARK_SUBMIT_OPTIONS="--driver-memory $ZEPPELIN_SPARK_DRIVER_MEMORY --con
 # Pyspark (supported with Spark 1.2.1 and above)
 # To configure pyspark, you need to set spark distribution's path to 'spark.home' property in Interpreter setting screen in Zeppelin GUI
 # export PYSPARK_PYTHON          		# path to the python command. must be the same path on the driver(Zeppelin) and all workers.
+export PYSPARK_PYTHON="$ZEPPELIN_PYSPARK_PYTHON"
 # export PYTHONPATH
