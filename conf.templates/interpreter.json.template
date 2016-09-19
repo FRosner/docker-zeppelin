@@ -74,7 +74,9 @@
       "id": "2B6N7TAWJ",
       "name": "sh",
       "group": "sh",
-      "properties": {},
+      "properties": {
+        "shell.command.timeout.millisecs": "60000"
+      },
       "interpreterGroup": [
         {
           "class": "org.apache.zeppelin.shell.ShellInterpreter",
