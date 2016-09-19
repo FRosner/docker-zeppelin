@@ -9,6 +9,7 @@
         "master": "$ZEPPELIN_SPARK_MASTER",
         "zeppelin.spark.maxResult": "200",
         "zeppelin.dep.localrepo": "local-repo",
+        "zeppelin.spark.printREPLOutput": "true",
         "spark.app.name": "Zeppelin",
         "spark.executor.memory": "512m",
         "zeppelin.spark.useHiveContext": "true",
