@@ -34,5 +34,6 @@ after_success:
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$NICE_BRANCH_NAME" ; fi`
   - docker build -t $REPO:$COMMIT .
   - docker tag $REPO:$COMMIT $REPO:$TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  - docker tag $REPO:$COMMIT $REPO:$COMMIT-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   - docker push $REPO
