@@ -24,6 +24,8 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
   /bin/bash ~/anaconda.sh -b -p /opt/conda && \
   rm ~/anaconda.sh
 
+RUN ln -s /opt/conda/bin/python /usr/bin/python
+
 ADD spark /usr/local/spark
 
 ADD zeppelin /usr/local/zeppelin
