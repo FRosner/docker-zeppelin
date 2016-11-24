@@ -1,6 +1,6 @@
 # Docker Zeppelin
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/frosner/zeppelin.svg?maxAge=2592000)](https://hub.docker.com/r/frosner/zeppelin/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/frosner/zeppelind.svg?maxAge=2592000)](https://hub.docker.com/r/frosner/zeppelind/)
 
 ## Description
 

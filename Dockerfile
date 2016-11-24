@@ -1,27 +1,33 @@
-FROM maven:3.3.3-jdk-8
+FROM openjdk:8-jre
 
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
-  apt-get install -y git npm && \
+  apt-get install -y \
+    curl \
+    grep \
+    sed \
+    git \
+    wget \
+    bzip2 \
+    gettext \
+    sudo \
+    ca-certificates \
+    libglib2.0-0 \
+    libxext6 \
+    libsm6 \
+    libxrender1 && \
   apt-get clean all
 
-RUN npm install -g bower grunt
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+  wget --quiet https://repo.continuum.io/archive/Anaconda2-4.2.0-Linux-x86_64.sh -O ~/anaconda.sh && \
+  /bin/bash ~/anaconda.sh -b -p /opt/conda && \
+  rm ~/anaconda.sh
 
-RUN git clone https://github.com/apache/zeppelin.git /usr/local/zeppelin
+ADD spark /usr/local/spark
+
+ADD zeppelin /usr/local/zeppelin
 WORKDIR /usr/local/zeppelin
-RUN git checkout v0.6.2
-
-RUN mvn clean package -Pspark-1.6 -Phadoop-2.6 -DskipTests
-
-RUN rm -rf /var/lib/apt/lists/* && \
-  apt-get update && \
-  apt-get install -y gettext && \
-  apt-get install -y sudo && \
-  apt-get clean all
-
-RUN curl -s http://d3kbcqa49mib13.cloudfront.net/spark-1.6.2-bin-hadoop2.6.tgz | tar -xz -C /usr/local
-RUN mv /usr/local/spark* /usr/local/spark
 
 RUN rm -rf conf
 

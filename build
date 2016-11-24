@@ -1,0 +1,38 @@
+#!/bin/bash
+
+spark_version="$1"
+case "$spark_version" in
+  "1.6"*)
+    zeppelin_spark_version="1.6"
+    ;;
+  "2.0"*)
+    zeppelin_spark_version="2.0"
+    ;;
+  *)
+    echo "Spark version '$spark_version' not supported."
+    exit 1
+esac
+
+hadoop_version="$2"
+case "$hadoop_version" in
+  "2.6")
+    ;;
+  "2.7")
+    ;;
+  *)
+    echo "Hadoop version '$hadoop_version' not supported."
+    exit 1
+esac
+zeppelin_hadoop_version="$hadoop_version"
+
+zeppelin_version="$3"
+
+set -e -v
+
+curl -s http://archive.apache.org/dist/spark/spark-$spark_version/spark-$spark_version-bin-hadoop$hadoop_version.tgz | tar -xz -C .
+mv spark-* spark
+
+git clone https://github.com/apache/zeppelin.git zeppelin
+cd zeppelin
+git checkout $zeppelin_version
+echo "mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests"
