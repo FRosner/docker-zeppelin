@@ -14,9 +14,9 @@ env:
     - SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
 
 before_script:
-  - apt-get update
-  - apt-get install -y git npm
-  - npm install -g bower grunt
+  - sudo apt-get update
+  - sudo apt-get install -y git npm
+  - sudo npm install -g bower grunt
   - git clone https://github.com/apache/zeppelin.git
 
 script:
