@@ -5,17 +5,21 @@ services:
 jdk:
   - oraclejdk8
 
+# https://github.com/apache/zeppelin/blob/master/spark-dependencies/pom.xml for supported combinations
+env:
+  global:
+    - ZEPPELIN_VERSION=v0.6.2
+  matrix:
+    - SPARK_VERSION=1.6.2 HADOOP_VERSION=2.6
+    - SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
+
 before_script:
   - apt-get update
   - apt-get install -y git npm
   - npm install -g bower grunt
   - git clone https://github.com/apache/zeppelin.git
 
-# https://github.com/apache/zeppelin/blob/master/spark-dependencies/pom.xml for supported combinations
 script:
-  - export SPARK_VERSION=1.6.2
-  - export HADOOP_VERSION=2.6
-  - export ZEPPELIN_VERSION=v0.6.2
   - build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
 
 cache:
