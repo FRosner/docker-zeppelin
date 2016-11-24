@@ -17,7 +17,6 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install -y git npm
   - sudo npm install -g bower grunt
-  - git clone https://github.com/apache/zeppelin.git
 
 script:
   - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
