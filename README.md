@@ -1,6 +1,7 @@
 # Docker Zeppelin
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/frosner/zeppelin.svg?maxAge=2592000)](https://hub.docker.com/r/frosner/zeppelin/)
+[![Build Status](https://travis-ci.org/FRosner/docker-zeppelin.svg?branch=master)](https://travis-ci.org/FRosner/docker-zeppelin)
+[![Docker Pulls](https://img.shields.io/docker/pulls/frosner/zeppelind.svg?maxAge=2592000)](https://hub.docker.com/r/frosner/zeppelind/)
 
 ## Description
 
@@ -26,7 +27,7 @@ docker run -p 8080:8080 \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
   -v $(pwd)/conf:/usr/local/zeppelin/conf \
   -v $(pwd)/hive:/hive \
-  frosner/zeppelin
+  frosner/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
 ```
 
 ## Configuration

@@ -1,0 +1,39 @@
+language: java
+sudo: required
+services:
+  - docker
+jdk:
+  - oraclejdk8
+
+# https://github.com/apache/zeppelin/blob/master/spark-dependencies/pom.xml for supported combinations
+env:
+  global:
+    - ZEPPELIN_VERSION=v0.6.2
+  matrix:
+    - SPARK_VERSION=1.6.2 HADOOP_VERSION=2.6
+    - SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
+
+before_script:
+  - sudo apt-get update
+  - sudo apt-get install -y git npm
+  - sudo npm install -g bower grunt
+
+script:
+  - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.ivy2
+
+after_success:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+  - export COMMIT=${TRAVIS_COMMIT::8}
+  - export REPO=frosner/zeppelind
+  - export NICE_BRANCH_NAME=$(echo $TRAVIS_BRANCH | sed -e 's/\//_/g')
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$NICE_BRANCH_NAME" ; fi`
+  - docker build -t $REPO:$COMMIT .
+  - docker tag $REPO:$COMMIT $REPO:$TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  - docker tag $REPO:$COMMIT $REPO:$COMMIT-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  - docker push $REPO
