@@ -19,7 +19,7 @@ before_script:
   - sudo npm install -g bower grunt
 
 script:
-  - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
+  - travis_wait 40 ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
 
 cache:
   directories:
