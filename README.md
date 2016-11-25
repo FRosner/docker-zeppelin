@@ -1,5 +1,6 @@
 # Docker Zeppelin
 
+[![Build Status](https://travis-ci.org/FRosner/docker-zeppelin.svg?branch=master)](https://travis-ci.org/FRosner/docker-zeppelin)
 [![Docker Pulls](https://img.shields.io/docker/pulls/frosner/zeppelind.svg?maxAge=2592000)](https://hub.docker.com/r/frosner/zeppelind/)
 
 ## Description
