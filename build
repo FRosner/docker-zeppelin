@@ -35,4 +35,4 @@ mv spark-* spark
 git clone https://github.com/apache/zeppelin.git zeppelin
 cd zeppelin
 git checkout $zeppelin_version
-echo "mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests"
+mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests
