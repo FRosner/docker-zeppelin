@@ -4,7 +4,7 @@ RUN export DEBIAN_FRONTEND=noninteractive
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
-  apt-get install -y \
+  apt-get install -y -qq \
     curl \
     grep \
     sed \
