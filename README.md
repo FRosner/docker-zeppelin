@@ -47,3 +47,10 @@ The docker image requires some environment variables to be set. They are used to
 | `ZEPPELIN_SPARK_UI_PORT` | Port to use for the Spark UI. |
 | `ZEPPELIN_SPARK_DRIVER_MEMORY` | Amount of memory to allocate to the Spark driver process (e.g. `512M`). |
 | `ZEPPELIN_PYSPARK_PYTHON` | Path to python executable for the Spark worker nodes. |
+
+If you want to look up your users on LDAP, feel free to mount:
+
+- {{/etc/pam.d/common-session:/etc/pam.d/common-session:ro}}
+- {{/etc/nsswitch.conf:/etc/nsswitch.conf:ro}}
+- {{/etc/ldap.conf:/etc/ldap.conf:ro}}
+- {{/etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro}}

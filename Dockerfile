@@ -16,7 +16,9 @@ RUN \
     libglib2.0-0 \
     libxext6 \
     libsm6 \
-    libxrender1 && \
+    libxrender1 \
+    libnss-ldap \
+    ldap-utils && \
   apt-get clean all
 
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
