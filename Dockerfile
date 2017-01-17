@@ -1,5 +1,6 @@
 FROM openjdk:8-jre
 
+RUN export DEBIAN_FRONTEND=noninteractive
 RUN \
   sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
   apt-get update && \
