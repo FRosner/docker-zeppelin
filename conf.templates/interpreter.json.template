@@ -13,7 +13,7 @@
         "zeppelin.spark.useHiveContext": "true",
         "zeppelin.spark.maxResult": "1000",
         "zeppelin.spark.printREPLOutput": "true",
-        "zeppelin.dep.localrepo": "local-repo"
+        "zeppelin.dep.localrepo": "local-repo",
         "spark.app.name": "Zeppelin",
         "spark.executor.memory": "512m",
         "args": "",
