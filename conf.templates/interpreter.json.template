@@ -8,13 +8,15 @@
         "spark.cores.max": "",
         "master": "$ZEPPELIN_SPARK_MASTER",
         "zeppelin.spark.maxResult": "200",
-        "zeppelin.dep.localrepo": "local-repo",
+        "zeppelin.spark.sql.stacktrace": "false",
+        "zeppelin.spark.concurrentSQL": "false",
+        "zeppelin.spark.useHiveContext": "true",
+        "zeppelin.spark.maxResult": "1000",
         "zeppelin.spark.printREPLOutput": "true",
+        "zeppelin.dep.localrepo": "local-repo",
         "spark.app.name": "Zeppelin",
         "spark.executor.memory": "512m",
-        "zeppelin.spark.useHiveContext": "true",
         "args": "",
-        "zeppelin.spark.concurrentSQL": "false",
         "zeppelin.pyspark.python": "$ZEPPELIN_PYSPARK_PYTHON",
         "zeppelin.dep.additionalRemoteRepository": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;"
       },
@@ -36,6 +38,7 @@
           "name": "dep"
         }
       ],
+      "dependencies": [],
       "option": {
         "remote": true
       }
@@ -51,6 +54,7 @@
           "name": "angular"
         }
       ],
+      "dependencies": [],
       "option": {
         "remote": true
       }
@@ -66,6 +70,7 @@
           "name": "md"
         }
       ],
+      "dependencies": [],
       "option": {
         "remote": true
       }
@@ -83,6 +88,7 @@
           "name": "sh"
         }
       ],
+      "dependencies": [],
       "option": {
         "remote": true
       }

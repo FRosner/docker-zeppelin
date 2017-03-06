@@ -17,8 +17,9 @@ env:
 
 before_script:
   - sudo apt-get update
-  - sudo apt-get install -y git npm
-  - sudo npm install -g bower grunt
+  - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y git
+  - npm update npm -g
+  - npm install -g bower grunt
 
 script:
   - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
