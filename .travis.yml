@@ -17,7 +17,7 @@ env:
 
 before_script:
   - sudo apt-get update
-  - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y git npm 
+  - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y git nodejs npm 
   - sudo npm install -g bower grunt
 
 script:
