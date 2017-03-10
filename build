@@ -35,7 +35,7 @@ set -e -v
 curl -s http://archive.apache.org/dist/spark/spark-$spark_version/spark-$spark_version-bin-hadoop$hadoop_version.tgz | tar -xz -C .
 mv spark-* spark
 
-git clone https://github.com/apache/zeppelin.git zeppelin
+git clone https://github.com/FRosner/incubator-zeppelin.git zeppelin
 cd zeppelin
 git checkout $zeppelin_version
 mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests | perl -ne 'print if $. % 100 == 1'
