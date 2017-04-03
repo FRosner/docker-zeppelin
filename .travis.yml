@@ -8,9 +8,9 @@ jdk:
 # https://github.com/apache/zeppelin/blob/master/spark-dependencies/pom.xml for supported combinations
 env:
   matrix:
-    - ZEPPELIN_VERSION=34c81747 SPARK_VERSION=1.6.3 HADOOP_VERSION=2.6
-    - ZEPPELIN_VERSION=34c81747 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
-    - ZEPPELIN_VERSION=34c81747 SPARK_VERSION=2.1.0 HADOOP_VERSION=2.7
+    - ZEPPELIN_VERSION=be28a5d50 SPARK_VERSION=1.6.3 HADOOP_VERSION=2.6
+    - ZEPPELIN_VERSION=be28a5d50 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
+    - ZEPPELIN_VERSION=be28a5d50 SPARK_VERSION=2.1.0 HADOOP_VERSION=2.7
 
 before_script:
   - sudo apt-get update
