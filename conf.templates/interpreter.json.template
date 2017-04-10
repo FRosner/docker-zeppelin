@@ -11,7 +11,6 @@
         "zeppelin.spark.sql.stacktrace": "false",
         "zeppelin.spark.concurrentSQL": "false",
         "zeppelin.spark.useHiveContext": "true",
-        "zeppelin.spark.maxResult": "1000",
         "zeppelin.spark.printREPLOutput": "true",
         "zeppelin.dep.localrepo": "local-repo",
         "spark.app.name": "Zeppelin",
