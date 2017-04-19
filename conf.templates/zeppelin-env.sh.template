@@ -2,6 +2,12 @@
 
 export ZEPPELIN_NOTEBOOK_DIR="notebooks"   		# Where notebook at?
 
+# export ZEPPELIN_JAVA_OPTS      		# Additional jvm options. for example, export ZEPPELIN_JAVA_OPTS="-Dspark.executor.memory=8g -Dspark.cores.max=16"
+export ZEPPELIN_MEM="$ZEPPELIN_MEM"            		# Zeppelin jvm mem options Default -Xms1024m -Xmx1024m -XX:MaxPermSize=512m
+# export ZEPPELIN_INTP_MEM       		# zeppelin interpreter process jvm mem options. Default -Xms1024m -Xmx1024m -XX:MaxPermSize=512m
+# export ZEPPELIN_INTP_JAVA_OPTS 		# zeppelin interpreter process jvm options.
+# export ZEPPELIN_SSL_PORT       		# ssl port (used when ssl environment variable is set to true)
+
 #### Spark interpreter configuration ####
 
 export SPARK_HOME=/usr/local/spark
