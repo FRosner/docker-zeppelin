@@ -24,7 +24,7 @@ function replace_env_config {
 replace_env_config_if_not_exists interpreter.json
 replace_env_config zeppelin-env.sh
 replace_env_config zeppelin-site.xml
-replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
+# replace_env_config shiro.ini '$ZEPPELIN_PASSWORD'
 replace_env_config interpreter-list
 replace_env_config log4j.properties
 replace_env_config hive-site.xml
@@ -43,7 +43,7 @@ if id -u $ZEPPELIN_PROCESS_USER_NAME 2>/dev/null; then
 else
   echo "User $ZEPPELIN_PROCESS_USER_NAME does not exist, creating it with uid=$ZEPPELIN_PROCESS_USER_ID"
   adduser --force-badname $ZEPPELIN_PROCESS_USER_NAME --uid $ZEPPELIN_PROCESS_USER_ID --gecos "" --ingroup $ZEPPELIN_PROCESS_GROUP_NAME --disabled-login --disabled-password
-fi 
+fi
 
 # adjust ownership of the zeppelin folder
 chown -R $ZEPPELIN_PROCESS_USER_NAME ../zeppelin
