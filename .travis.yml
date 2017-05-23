@@ -23,13 +23,6 @@ before_script:
 
 script:
   - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
-
-cache:
-  directories:
-    - $HOME/.m2
-    - $HOME/.ivy2
-
-after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - export COMMIT=${TRAVIS_COMMIT::8}
   - export REPO=frosner/zeppelind
@@ -40,3 +33,8 @@ after_success:
   - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   - docker tag $REPO:$COMMIT $REPO:$COMMIT-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   - docker push $REPO
+
+cache:
+  directories:
+    - $HOME/.m2
+    - $HOME/.ivy2
