@@ -38,4 +38,9 @@ mv spark-* spark
 git clone https://github.com/apache/zeppelin.git zeppelin
 cd zeppelin
 git checkout $zeppelin_version
-mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests | perl -ne 'print if $. % 100 == 1'
+mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests -Pbuild-distr | perl -ne 'print if $. % 100 == 1'
+cd ..
+mv zeppelin/zeppelin-distribution/target/zeppelin-*.tar.gz zeppelin_dist.tar.gz
+rm -rf zeppelin
+tar -xzf zeppelin_dist.tar.gz
+mv zeppelin-* zeppelin
