@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Data-Science-Platform/docker-zeppelin.svg?branch=master)](https://travis-ci.org/Data-Science-Platform/docker-zeppelin)
 [![Docker Pulls](https://img.shields.io/docker/pulls/datascienceplatform/zeppelind.svg?maxAge=2592000)](https://hub.docker.com/r/datascienceplatform/zeppelind/)
-[![Image Size](https://images.microbadger.com/badges/image/data-science-platform/zeppelind.svg)](https://microbadger.com/images/frosner/zeppelind "Get your own image badge on microbadger.com")
+[![Image Size](https://images.microbadger.com/badges/image/data-science-platform/zeppelind.svg)](https://microbadger.com/images/datascienceplatform/zeppelind "Get your own image badge on microbadger.com")
 
 ## Description
 
