@@ -11,6 +11,9 @@ case "$spark_version" in
   "2.1"*)
     zeppelin_spark_version="2.1"
     ;;
+  "2.3"*)
+    zeppelin_spark_version="2.1"
+    ;;
   *)
     echo "Spark version '$spark_version' not supported."
     exit 1
