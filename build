@@ -48,7 +48,7 @@ if [ "$zeppelin_spark_version" == "2.3" ]
 then
   # https://github.com/apache/zeppelin/pull/2880
   # ./dev/change_scala_version.sh 2.11
-  mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 100 == 1'
+  mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
 else
   mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests -Pbuild-distr | perl -ne 'print if $. % 100 == 1'
 fi
