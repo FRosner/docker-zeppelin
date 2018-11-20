@@ -10,7 +10,7 @@ Docker image for starting [Apache Zeppelin](https://zeppelin.apache.org/).
 
 ## Usage
 
-You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/FRosner/nomad-docker-wrapper) if you are running your containers on Nomad.
+You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/Data-Science-Platform/nomad-docker-wrapper) if you are running your containers on Nomad.
 
 ```
 docker run -p 8080:8080 \
@@ -29,7 +29,7 @@ docker run -p 8080:8080 \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
   -v $(pwd)/conf:/usr/local/zeppelin/conf \
   -v $(pwd)/hive:/hive \
-  frosner/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
+  datascienceplatform/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
 ```
 
 ## Configuration
