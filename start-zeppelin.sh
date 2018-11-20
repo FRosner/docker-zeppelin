@@ -33,6 +33,9 @@ replace_env_config hive-site.xml
 if [ -z "$ZEPPELIN_PROCESS_GROUP_NAME" ]; then
   echo "Environment variable ZEPPELIN_PROCESS_GROUP_NAME required, but not set, exiting ..."
   exit
+elif [ -z "$ZEPPELIN_PROCESS_GROUP_ID" ]; then
+  echo "Environment variable ZEPPELIN_PROCESS_GROUP_ID required, but not set, exiting ..."
+  exit
 elif getent group $ZEPPELIN_PROCESS_GROUP_NAME; then
   echo "Group $ZEPPELIN_PROCESS_GROUP_NAME already exists"
 else
@@ -42,7 +45,10 @@ fi
 
 # add zeppelin user if not exists
 if [ -z "$ZEPPELIN_PROCESS_USER_NAME" ]; then
-  echo "Environment variable $ZEPPELIN_PROCESS_USER_NAME required, but not set, exiting ..."
+  echo "Environment variable ZEPPELIN_PROCESS_USER_NAME required, but not set, exiting ..."
+  exit
+elif [ -z "$ZEPPELIN_PROCESS_USER_ID" ]; then
+  echo "Environment variable ZEPPELIN_PROCESS_USER_ID required, but not set, exiting ..."
   exit
 elif id -u $ZEPPELIN_PROCESS_USER_NAME 2>/dev/null; then
   echo "User $ZEPPELIN_PROCESS_USER_NAME already exists"
