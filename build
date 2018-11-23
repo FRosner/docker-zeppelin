@@ -11,6 +11,12 @@ case "$spark_version" in
   "2.1"*)
     zeppelin_spark_version="2.1"
     ;;
+  "2.2"*)
+    zeppelin_spark_version="2.2"
+    ;;
+  "2.3"*)
+    zeppelin_spark_version="2.3"
+    ;;
   *)
     echo "Spark version '$spark_version' not supported."
     exit 1
@@ -38,7 +44,14 @@ mv spark-* spark
 git clone https://github.com/apache/zeppelin.git zeppelin
 cd zeppelin
 git checkout $zeppelin_version
-mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests -Pbuild-distr | perl -ne 'print if $. % 100 == 1'
+if [ "$zeppelin_spark_version" == "2.3" ]
+then
+  # https://github.com/apache/zeppelin/pull/2880
+  # ./dev/change_scala_version.sh 2.11
+  mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
+else
+  mvn clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests -Pbuild-distr | perl -ne 'print if $. % 100 == 1'
+fi
 cd ..
 mv zeppelin/zeppelin-distribution/target/zeppelin-*.tar.gz zeppelin_dist.tar.gz
 rm -rf zeppelin

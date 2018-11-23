@@ -10,7 +10,7 @@ Docker image for starting [Apache Zeppelin](https://zeppelin.apache.org/).
 
 ## Usage
 
-You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/FRosner/nomad-docker-wrapper) if you are running your containers on Nomad.
+You can either start the image directly with Docker, or use the [Nomad-Docker-Wrapper](https://github.com/Data-Science-Platform/nomad-docker-wrapper) if you are running your containers on Nomad.
 
 ```
 docker run -p 8080:8080 \
@@ -29,7 +29,7 @@ docker run -p 8080:8080 \
   -v $(pwd)/notebooks:/usr/local/zeppelin/notebooks \
   -v $(pwd)/conf:/usr/local/zeppelin/conf \
   -v $(pwd)/hive:/hive \
-  frosner/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
+  datascienceplatform/zeppelind:latest-zv0.6.2-s2.0.2-h2.7
 ```
 
 ## Configuration
@@ -50,3 +50,14 @@ The docker image requires some environment variables to be set. They are used to
 | `ZEPPELIN_SPARK_DRIVER_MEMORY` | Amount of memory to allocate to the Spark driver process (e.g. `512M`). |
 | `ZEPPELIN_PYSPARK_PYTHON` | Path to python executable for the Spark worker nodes. |
 | `ZEPPELIN_MEM` | Zeppelin JVM Options |
+
+## Travis CI/CD
+
+These environment variables should be defined and set appropriately in your Travis CI Settings.
+https://travis-ci.org/<your travis account name>/docker-zeppelin/settings
+
+| Variable | Description |
+| -------- | ----------- |
+| `DOCKER_USER` | Your docker ID |
+| `DOCKER_PASSWORD` | Password for your docker ID (make sure "display value in build log" is disabled for this env var)|
+| `DOCKER_NAMESPACE` | Docker namespace, where the image(s) should be pushed; usually equals to DOCKER_USER; if empty, then "datascienceplatform" (that can lead to permission issues while pushing) |
