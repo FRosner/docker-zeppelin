@@ -24,6 +24,7 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
   /bin/bash ~/anaconda.sh -b -p /opt/conda && \
   rm ~/anaconda.sh
 
+RUN /opt/conda/bin/conda install SQLAlchemy psycopg2 pymssql
 RUN ln -s /opt/conda/bin/python /usr/bin/python
 
 ADD spark /usr/local/spark

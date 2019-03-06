@@ -61,3 +61,42 @@ https://travis-ci.org/<your travis account name>/docker-zeppelin/settings
 | `DOCKER_USER` | Your docker ID |
 | `DOCKER_PASSWORD` | Password for your docker ID (make sure "display value in build log" is disabled for this env var)|
 | `DOCKER_NAMESPACE` | Docker namespace, where the image(s) should be pushed; usually equals to DOCKER_USER; if empty, then "datascienceplatform" (that can lead to permission issues while pushing) |
+
+## SQL Database Support
+
+SQL databases are supported trough [SQLAlchemy](https://docs.sqlalchemy.org/en/latest/) (a python package  with a comprehensive set of tools for working with databases). This container includes the following [dialects](https://docs.sqlalchemy.org/en/latest/dialects/):
+
+| Dialect | Target DB |
+| ------- | --------- |
+| `pymssql` | Microsoft SQL Server |
+| `psycopg2` | PostgreSQL |
+
+Support for additional databases can be added by installing additional [dialects](https://docs.sqlalchemy.org/en/latest/dialects/) into an anaconda environment and setting `ZEPPELIN_PYSPARK_PYTHON` to the environment location.
+
+###  Microsoft SQL Server Example
+
+```
+%spark.pyspark
+import sqlalchemy
+from sqlalchemy import create_engine
+conn_str = "mssql+pymssql://<User>:<Password>@<Host>:<Port>"
+engine = create_engine(conn_str)
+# List All DBs
+res = engine.execute('SELECT * FROM master.sys.databases')
+for row in res:
+    print row
+```
+
+###  PostgreSQL Example
+
+```
+%spark.pyspark
+import sqlalchemy
+from sqlalchemy import create_engine
+conn_str = "postgresql+psycopg2:///<User>:<Password>@<Host>:<Port>"
+engine = create_engine(conn_str)
+# List All DBs
+res = engine.execute('SELECT * FROM pg_database')
+for row in res:
+    print row
+```
