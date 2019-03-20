@@ -70,6 +70,7 @@ SQL databases are supported trough [SQLAlchemy](https://docs.sqlalchemy.org/en/l
 | ------- | --------- |
 | `pymssql` | Microsoft SQL Server |
 | `psycopg2` | PostgreSQL |
+| `cx_Oracle` | Oracle |
 
 Support for additional databases can be added by installing additional [dialects](https://docs.sqlalchemy.org/en/latest/dialects/) into an anaconda environment and setting `ZEPPELIN_PYSPARK_PYTHON` to the environment location.
 
@@ -97,6 +98,19 @@ conn_str = "postgresql+psycopg2:///<User>:<Password>@<Host>:<Port>"
 engine = create_engine(conn_str)
 # List All DBs
 res = engine.execute('SELECT * FROM pg_database')
+for row in res:
+    print row
+```
+
+###  Oracle Example
+
+```
+%spark.pyspark
+import sqlalchemy
+from sqlalchemy import create_engine
+conn_str = "oracle+cx_oracle:///<User>:<Password>@<Host>:<Port>/<db>"
+engine = create_engine(conn_str)
+res = engine.execute('SELECT * FROM my_table')
 for row in res:
     print row
 ```
