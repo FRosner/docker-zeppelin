@@ -14,6 +14,8 @@ env:
     - ZEPPELIN_VERSION=v0.7.2 SPARK_VERSION=1.6.3 HADOOP_VERSION=2.6
     - ZEPPELIN_VERSION=v0.7.2 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
     - ZEPPELIN_VERSION=v0.7.2 SPARK_VERSION=2.1.1 HADOOP_VERSION=2.7
+    - ZEPPELIN_VERSION=v0.8.0 SPARK_VERSION=2.3.2 HADOOP_VERSION=2.7
+    - ZEPPELIN_VERSION=v0.8.1 SPARK_VERSION=2.1.1 HADOOP_VERSION=2.7
 
 before_script:
   - sudo apt-get update
@@ -22,10 +24,10 @@ before_script:
   - npm install -g bower grunt
 
 script:
-  - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
+  - travis_wait 30 ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - export COMMIT=${TRAVIS_COMMIT::8}
-  - export REPO=frosner/zeppelind
+  - export REPO=${DOCKER_NAMESPACE:-datascienceplatform}/zeppelind
   - export NICE_BRANCH_NAME=$(echo $TRAVIS_BRANCH | sed -e 's/\//_/g')
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$NICE_BRANCH_NAME" ; fi`
   - docker build -t $REPO:$COMMIT .
