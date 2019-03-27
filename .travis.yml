@@ -24,7 +24,7 @@ before_script:
   - npm install -g bower grunt
 
 script:
-  - ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
+  - travis_wait 30 ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - export COMMIT=${TRAVIS_COMMIT::8}
   - export REPO=${DOCKER_NAMESPACE:-datascienceplatform}/zeppelind
