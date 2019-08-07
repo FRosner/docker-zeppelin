@@ -6,7 +6,7 @@
       "group": "spark",
       "properties": {
         "spark.cores.max": "",
-        "spark.eventLog.enable": "false",
+        "spark.eventLog.enabled": "false",
         "spark.eventLog.dir": "",
         "master": "$ZEPPELIN_SPARK_MASTER",
         "zeppelin.spark.maxResult": "200",
