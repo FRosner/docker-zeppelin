@@ -19,6 +19,7 @@ RUN \
     libxrender1 \
     libaio1 \
     build-essential \
+    p7zip \
     unzip && \
   apt-get clean all
 
