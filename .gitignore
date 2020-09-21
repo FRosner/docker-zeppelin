@@ -1,3 +1,4 @@
+shiro-remote-user
 notebooks
 notebook
 *~
@@ -6,3 +7,5 @@ zeppelin
 oracle
 local-repo
 conf
+zeppelin*
+zeppelin_dist.tar.gz
