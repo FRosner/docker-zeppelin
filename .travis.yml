@@ -8,9 +8,6 @@ jdk:
 # https://github.com/apache/zeppelin/blob/master/spark-dependencies/pom.xml for supported combinations
 env:
   matrix:
-    - ZEPPELIN_VERSION=v0.7.2 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
-    - ZEPPELIN_VERSION=v0.7.2 SPARK_VERSION=2.1.1 HADOOP_VERSION=2.7
-    - ZEPPELIN_VERSION=v0.8.0 SPARK_VERSION=2.3.2 HADOOP_VERSION=2.7
     - ZEPPELIN_VERSION=v0.8.1 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
     - ZEPPELIN_VERSION=v0.8.1 SPARK_VERSION=2.1.1 HADOOP_VERSION=2.7
     - ZEPPELIN_VERSION=v0.8.2 SPARK_VERSION=2.0.2 HADOOP_VERSION=2.7
@@ -23,18 +20,20 @@ before_script:
   - sudo apt-get update
   - sudo apt-get -o Dpkg::Options::="--force-overwrite" install -y git
   - npm update npm -g
-  - npm install -g bower grunt
+  - npm install -g bower grunt  
 
 script:
-  - travis_wait 30 ./build $SPARK_VERSION $HADOOP_VERSION $ZEPPELIN_VERSION
+  - travis_wait 30 
+  - ./build shiro 
+  - ./build download --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
+  - ./build binary --zeppelin_version=$ZEPPELIN_VERSION --spark_version=$SPARK_VERSION --hadoop_version=$HADOOP_VERSION
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
   - export COMMIT=${TRAVIS_COMMIT::8}
-  - export REPO=${DOCKER_NAMESPACE:-datascienceplatform}/zeppelind
+  - export REPO=datascienceplatform/zeppelind
   - export NICE_BRANCH_NAME=$(echo $TRAVIS_BRANCH | sed -e 's/\//_/g')
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "$NICE_BRANCH_NAME" ; fi`
-  - docker build -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  - ./build docker --repo=$REPO --commit=$COMMIT
+  # - docker tag $REPO:$COMMIT $REPO:$TAG-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
+  # - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   - docker tag $REPO:$COMMIT $REPO:$COMMIT-z$ZEPPELIN_VERSION-s$SPARK_VERSION-h$HADOOP_VERSION
   - docker push $REPO
 

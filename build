@@ -1,78 +1,290 @@
 #!/bin/bash
 
-spark_version="$1"
-case "$spark_version" in
-  "1.6"*)
-    zeppelin_spark_version="1.6"
-    ;;
-  "2.0"*)
-    zeppelin_spark_version="2.0"
-    ;;
-  "2.1"*)
-    zeppelin_spark_version="2.1"
-    ;;
-  "2.2"*)
-    zeppelin_spark_version="2.2"
-    ;;
-  "2.3"*)
-    zeppelin_spark_version="2.3"
-    ;;
-  "2.4"*)
-    zeppelin_spark_version="2.4"
-    ;;
-  *)
-    echo "Spark version '$spark_version' not supported."
+set -ex
+
+SCRIPT_DIR=$(cd "$(dirname "$0")" ; pwd -P)
+
+checkmark="\xe2\x98\x91"
+cross="\xe2\x98\x92"
+
+startred='\033[0;31m'
+endcolor='\033[0m'
+startgreen='\033[0;32m'
+
+echoCheck() {
+  echo -e "$startgreen $checkmark $1 $endcolor"
+}
+
+echoError() {
+  echo -e "$startred $cross $1 $endcolor"
+}
+
+echob() {
+    echo -e "\033[1m$1\033[0m"
+}
+
+check() { # checks if a tool is installed
+  if ! type "$1" > /dev/null 2>&1; then
+    echoError "$2"
     exit 1
-esac
+  else
+    echoCheck "$3"
+  fi
+}
 
-hadoop_version="$2"
-case "$hadoop_version" in
-  "2.6")
-    ;;
-  "2.7")
-    ;;
-  *)
-    echo "Hadoop version '$hadoop_version' not supported."
-    exit 1
-esac
-zeppelin_hadoop_version="$hadoop_version"
+goal_prepare() {
+  check "java" "Java not installed" "Java installed"
+  check "mvn" "mvn not installed" "mvn installed"
+  check "curl" "curl not installed" "curl installed"
+  check "git" "git not installed" "git installed"
+  check "docker" "Docker not installed" "Docker installed"
+  check "perl" "Perl not installed" "Perl installed"
+}
 
-zeppelin_version="$3"
+goal_download(){
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --spark_version=*)
+        SPARK_VERSION="${1#*=}"
+        ;;
+      --hadoop_version=*)
+        HADOOP_VERSION="${1#*=}"
+        ;;
+      --zeppelin_version=*)
+        ZEPPELIN_VERSION="${1#*=}"
+        ;;
+      *)
+        printf "***************************\n"
+        printf "* Error: Invalid argument.*\n"
+        printf "***************************\n"
+        exit 1
+    esac
+    shift
+  done
 
-oracle_instantclient_version=${4:-12.2.0.1.0}
+  case "$SPARK_VERSION" in
+    "1.6"*)
+      zeppelin_spark_version="1.6"
+      ;;
+    "2.0"*)
+      zeppelin_spark_version="2.0"
+      ;;
+    "2.1"*)
+      zeppelin_spark_version="2.1"
+      ;;
+    "2.2"*)
+      zeppelin_spark_version="2.2"
+      ;;
+    "2.3"*)
+      zeppelin_spark_version="2.3"
+      ;;
+    "2.4"*)
+      zeppelin_spark_version="2.4"
+      ;;
+    *)
+      echo "Spark version '$SPARK_VERSION' not supported."
+      exit 1
+  esac
 
-set -e -v
+  case "$HADOOP_VERSION" in
+    "2.6")
+      ;;
+    "2.7")
+      ;;
+    *)
+      echo "Hadoop version '$HADOOP_VERSION' not supported."
+      exit 1
+  esac
 
-mkdir -p ./oracle/linux
+  oracle_instantclient_version=${4:-12.2.0.1.0}
 
-curl \
-    -L -o oracle/linux/instantclient-sdk-linux.x64.zip \
-    -s https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-sdk-linux.x64-$oracle_instantclient_version.zip
+  mkdir -p ./oracle/linux
 
-curl \
-    -L -o oracle/linux/instantclient-sqlplus-linux.x64.zip \
-    -s https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-sqlplus-linux.x64-$oracle_instantclient_version.zip
+  curl --progress-bar \
+       --location --output oracle/linux/instantclient-sdk-linux.x64.zip \
+       --show-error "https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-sdk-linux.x64-${oracle_instantclient_version}.zip"
 
-curl \
-    -L -o oracle/linux/instantclient-basic-linux.x64.zip \
-    -s https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-basic-linux.x64-$oracle_instantclient_version.zip
+  curl --progress-bar \
+       --location --output oracle/linux/instantclient-sqlplus-linux.x64.zip \
+       --show-error "https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-sqlplus-linux.x64-${oracle_instantclient_version}.zip"
 
-curl -s http://archive.apache.org/dist/spark/spark-$spark_version/spark-$spark_version-bin-hadoop$hadoop_version.tgz | tar -xz -C .
-mv spark-* spark
+  curl --progress-bar  \
+       --location --output oracle/linux/instantclient-basic-linux.x64.zip \
+       --show-error "https://github.com/bumpx/oracle-instantclient/raw/master/instantclient-basic-linux.x64-${oracle_instantclient_version}.zip"
 
-git clone https://github.com/apache/zeppelin.git zeppelin
-cd zeppelin
-git checkout $zeppelin_version
-if [[ "$zeppelin_spark_version" == "2.3" ]]
-then
-  # https://github.com/apache/zeppelin/pull/2880
-  # ./dev/change_scala_version.sh 2.11
-  mvn -e clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
+  curl --progress-bar --show-error "http://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz" | tar -xz -C .
+  mv spark-* spark
+
+  if [ ! -d "$SCRIPT_DIR/zeppelin" ]; then
+    git clone https://github.com/apache/zeppelin.git zeppelin
+  else
+    echoCheck "$SCRIPT_DIR/zeppelin directory found ignoring clone step."
+  fi
+  
+}
+
+function goal_shiro(){
+  echoCheck "Cloning shiro & building shiro library"
+
+  if [ ! -d "$SCRIPT_DIR/shiro-remote-user" ]; then
+    git clone https://github.com/leighklotz/shiro-remote-user.git "$SCRIPT_DIR/shiro-remote-user"
+  fi
+
+  pushd ${SCRIPT_DIR}/shiro-remote-user > /dev/null
+      mvn clean install 
+  popd > /dev/null
+}
+
+goal_binary(){
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --spark_version=*)
+        SPARK_VERSION="${1#*=}"
+        ;;
+      --hadoop_version=*)
+        HADOOP_VERSION="${1#*=}"
+        ;;
+      --zeppelin_version=*)
+        ZEPPELIN_VERSION="${1#*=}"
+        ;;
+      *)
+        printf "***************************\n"
+        printf "* Error: Invalid argument.*\n"
+        printf "***************************\n"
+        exit 1
+    esac
+    shift
+  done
+
+  case "$SPARK_VERSION" in
+    "1.6"*)
+      zeppelin_spark_version="1.6"
+      ;;
+    "2.0"*)
+      zeppelin_spark_version="2.0"
+      ;;
+    "2.1"*)
+      zeppelin_spark_version="2.1"
+      ;;
+    "2.2"*)
+      zeppelin_spark_version="2.2"
+      ;;
+    "2.3"*)
+      zeppelin_spark_version="2.3"
+      ;;
+    "2.4"*)
+      zeppelin_spark_version="2.4"
+      ;;
+    *)
+      echo "Spark version '$SPARK_VERSION' not supported."
+      exit 1
+  esac
+
+  case "$HADOOP_VERSION" in
+    "2.6")
+      ;;
+    "2.7")
+      ;;
+    *)
+      echo "Hadoop version '$HADOOP_VERSION' not supported."
+      exit 1
+  esac
+
+  pushd zeppelin > /dev/null
+    git checkout "$ZEPPELIN_VERSION"
+  popd > /dev/null
+
+  if [[ "$ZEPPELIN_VERSION" == "2.3" ]]
+  then
+    # https://github.com/apache/zeppelin/pull/2880
+    # ./dev/change_scala_version.sh 2.11
+    cd zeppelin && mvn clean package -DskipTests -Pbuild-distr | perl -ne 'print if $. % 10 == 1'
+  else
+    cd zeppelin && mvn clean package -Pspark-"$zeppelin_spark_version" -Phadoop-"$HADOOP_VERSION" -DskipTests -Pbuild-distr -Pscala-2.11 | perl -ne 'print if $. % 100 == 1'
+  fi
+
+  cd ..
+  ls -lah
+  ls -lah zeppelin/
+  mv zeppelin/zeppelin-distribution/target/zeppelin-*.tar.gz zeppelin_dist.tar.gz
+  rm -rf zeppelin
+  tar -xzf zeppelin_dist.tar.gz
+  mv zeppelin-* zeppelin
+  cp shiro-remote-user/target/shiro-remote-user-*.jar zeppelin/lib/
+}
+
+goal_clean(){
+  rm -rf "$SCRIPT_DIR/oracle"
+  rm -rf "$SCRIPT_DIR/spark"
+  rm -rf "$SCRIPT_DIR/zeppelin"
+  rm -rf "$SCRIPT_DIR/instantclient-*"
+}
+
+goal_docker(){
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --repo=*)
+        REPO="${1#*=}"
+        ;;
+      --commit=*)
+        COMMIT="${1#*=}"
+        ;;
+      *)
+        printf "***************************\n"
+        printf "* Error: Invalid argument.*\n"
+        printf "***************************\n"
+        exit 1
+    esac
+    shift
+  done
+
+  docker build -t "$REPO":"$COMMIT" .
+}
+
+goal_all(){
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --spark_version=*)
+        SPARK_VERSION="${1#*=}"
+        ;;
+      --hadoop_version=*)
+        HADOOP_VERSION="${1#*=}"
+        ;;
+      --zeppelin_version=*)
+        ZEPPELIN_VERSION="${1#*=}"
+        ;;
+      *)
+        printf "***************************\n"
+        printf "* Error: Invalid argument.*\n"
+        printf "***************************\n"
+        exit 1
+    esac
+    shift
+  done
+
+  goal_prepare
+  goal_shiro
+  goal_download --spark_version="$SPARK_VERSION" --hadoop_version="$HADOOP_VERSION" --zeppelin_version="$ZEPPELIN_VERSION"
+  goal_binary --spark_version="$SPARK_VERSION" --hadoop_version="$HADOOP_VERSION" --zeppelin_version="$ZEPPELIN_VERSION"
+  goal_docker --repo="${DOCKER_NAMESPACE:-datascienceplatform}/zeppelind" --commit="$(git rev-parse --short HEAD)"
+}
+
+if type -t "goal_$1" &>/dev/null; then
+  "goal_$1" "${@:2}"
 else
-  mvn -e clean package -Pspark-$zeppelin_spark_version -Phadoop-$zeppelin_hadoop_version -DskipTests -Pbuild-distr -Pscala-2.11 | perl -ne 'print if $. % 100 == 1'
+  echo "usage: $0 <goal>
+
+goal:
+    clean         -- Remove all downloads
+    prepare       -- Check script dependencies
+    shiro         -- Clone shiro project and build lib
+    download      -- Download dependencies
+    binary        -- Build libs for Zeppelin
+
+    docker        -- Build docker container
+    all           -- Prepare & Download & Binary
+
+ "
+  exit 1
 fi
-cd ..
-mv zeppelin/zeppelin-distribution/target/zeppelin-*.tar.gz zeppelin_dist.tar.gz
-rm -rf zeppelin
-tar -xzf zeppelin_dist.tar.gz
-mv zeppelin-* zeppelin
+
